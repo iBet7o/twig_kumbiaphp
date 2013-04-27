@@ -17,9 +17,10 @@ class View extends KumbiaView
 
     public static function render($controller, $_url)
     {
-
         // Guarda el controlador actual
         self::$_controller = $controller;
+        
+        self::$_content = ob_get_clean();
 
         if (!self::$_view) {
             return ob_end_flush();
@@ -39,6 +40,7 @@ class View extends KumbiaView
             'debug' => !PRODUCTION,
         ));
 
+        $twig->addExtension(new TwigExtension());
 
         if (self::$_view) {
             echo $twig->render(self::$_path . self::$_view . '.twig', self::getVar());
