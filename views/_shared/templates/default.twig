@@ -3,9 +3,10 @@
  <head>
   <meta http-equiv='Content-type' content='text/html; charset=<?php echo APP_CHARSET ?>' />
   <title>KumbiaPHP web &amp; App Framework</title>
-  {{ Tag_css('bienvenida') }}
-  {{ Tag_css('style') }}
-  {{ Html_includeCss() }}
+  {% block css %}
+    {{ css('bienvenida') }}
+    {{ css('style') }}
+  {% endblock css %}
 </head>
 <body>
     <div id='content'>
@@ -25,6 +26,9 @@
         {% endblock content %}            
         {% include '@partials/kumbia/footer.twig' %}
     </div>
+    {% block js %}
+        {{ js('jquery/jquery.min') }}
+    {% endblock js %}
 </body>
 </html>
 

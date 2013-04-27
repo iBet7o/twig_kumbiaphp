@@ -40,6 +40,12 @@ class TwigExtension extends Twig_Extension
                 'is_safe' => array('html'),
                     )),
             new Twig_SimpleFunction('kumbia_version', 'kumbia_version'),
+            new Twig_SimpleFunction('css', array($this, 'css'), array(
+                'is_safe' => array('html'),
+                    )),
+            new Twig_SimpleFunction('js', array($this, 'js'), array(
+                'is_safe' => array('html'),
+                    )),
         );
     }
 
@@ -47,13 +53,13 @@ class TwigExtension extends Twig_Extension
     {
         $args = func_get_args();
         unset($args[0], $args[1]);
-        
+
         if (function_exists("{$class}_{$method}")) {
             $call = "{$class}_{$method}";
         } else {
             $call = "{$class}::{$method}";
         }
-        
+
         return call_user_func_array($call, $args);
     }
 
@@ -64,6 +70,21 @@ class TwigExtension extends Twig_Extension
         }
 
         return false;
+    }
+
+    public function css($css, $media = 'screen')
+    {
+        return '<link href="' . PUBLIC_PATH . "css/{$css}.css\" rel=\"stylesheet\" type=\"text/css\" media=\"{$media}\" />";
+    }
+
+    public function js($src, $cache = TRUE)
+    {
+        $src = "javascript/$src.js";
+        if (!$cache) {
+            $src .= '?nocache=' . uniqid();
+        }
+
+        return '<script type="text/javascript" src="' . PUBLIC_PATH . $src . '"></script>';
     }
 
 }
