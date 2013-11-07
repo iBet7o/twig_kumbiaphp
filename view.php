@@ -19,7 +19,7 @@ class View extends KumbiaView
     {
         // Guarda el controlador actual
         self::$_controller = $controller;
-        
+
         self::$_content = ob_get_clean();
 
         if (!self::$_view) {
@@ -38,12 +38,14 @@ class View extends KumbiaView
         $twig = new Twig_Environment($loader, array(
             'cache' => APP_PATH . 'temp/cache/twig',
             'debug' => !PRODUCTION,
+            //'strict_variables' => !PRODUCTION,
         ));
 
         $twig->addExtension(new TwigExtension());
+        $twig->addExtension(new TwigExtensionForm(new PropertyAccessor()));
 
         if (self::$_view) {
-            echo $twig->render(self::$_path . self::$_view . '.twig', self::getVar());
+            $twig->display(self::$_path . self::$_view . '.twig', self::getVar());
         }
     }
 

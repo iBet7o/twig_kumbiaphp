@@ -1,8 +1,8 @@
 {% extends "@templates/default.twig" %}
 
 {% block content %}
-<div id='logo-kumbia'>{{ Html_img('default/kumbia.png','KumbiaPHP logo') }}</div>
-{{ View_content() }}
+<div id='logo-kumbia'><img src="{{ asset('img/default/kumbia.png') }}" /></div>
+{{ view_content() }}
 <div id='info'>
     <h1>KumbiaPHP está listo para usarse</h1>
     <p><strong>Bienvenido a KumbiaPHP Framework</strong>. El framework ya está listo para desarrollar aplicaciones web con PHP, rápida y fácilmente
