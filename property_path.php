@@ -9,18 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace Symfony\Component\PropertyAccess;
-
-use Symfony\Component\PropertyAccess\Exception\InvalidPropertyPathException;
-use Symfony\Component\PropertyAccess\Exception\OutOfBoundsException;
-use Symfony\Component\PropertyAccess\Exception\UnexpectedTypeException;
-
 /**
  * Default implementation of {@link PropertyPathInterface}.
  *
  * @author Bernhard Schussek <bschussek@gmail.com>
  */
-class PropertyPath implements \IteratorAggregate, PropertyPathInterface
+class PropertyPath implements IteratorAggregate
 {
     /**
      * Character used for separating between plural and singular of an element.
@@ -64,8 +58,8 @@ class PropertyPath implements \IteratorAggregate, PropertyPathInterface
      *
      * @param PropertyPath|string $propertyPath The property path as string or instance
      *
-     * @throws UnexpectedTypeException      If the given path is not a string
-     * @throws InvalidPropertyPathException If the syntax of the property path is not valid
+     * @throws InvalidArgumentException      If the given path is not a string
+     * @throws InvalidArgumentException If the syntax of the property path is not valid
      */
     public function __construct($propertyPath)
     {
@@ -81,11 +75,11 @@ class PropertyPath implements \IteratorAggregate, PropertyPathInterface
             return;
         }
         if (!is_string($propertyPath)) {
-            throw new UnexpectedTypeException($propertyPath, 'string or Symfony\Component\PropertyAccess\PropertyPath');
+            throw new InvalidArgumentException($propertyPath, 'string or Symfony\Component\PropertyAccess\PropertyPath');
         }
 
         if ('' === $propertyPath) {
-            throw new InvalidPropertyPathException('The property path should not be empty.');
+            throw new InvalidArgumentException('The property path should not be empty.');
         }
 
         $this->pathAsString = $propertyPath;
@@ -122,7 +116,7 @@ class PropertyPath implements \IteratorAggregate, PropertyPathInterface
         }
 
         if ('' !== $remaining) {
-            throw new InvalidPropertyPathException(sprintf(
+            throw new InvalidArgumentException(sprintf(
                 'Could not parse property path "%s". Unexpected token "%s" at position %d',
                 $propertyPath,
                 $remaining{0},

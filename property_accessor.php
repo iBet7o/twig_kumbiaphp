@@ -117,7 +117,7 @@ class PropertyAccessor
 
         for ($i = 0; $i < $lastIndex; ++$i) {
             if (!is_object($objectOrArray) && !is_array($objectOrArray)) {
-                throw new InvalidArgumentException($objectOrArray, 'debe ser un objeto o un array');
+                throw new InvalidArgumentException((string) $objectOrArray . ' debe ser un objeto o un array');
             }
 
             $property = $propertyPath->getElement($i);

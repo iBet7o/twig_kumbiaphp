@@ -41,6 +41,8 @@ class TwigExtensionForm extends Twig_Extension
             new Twig_SimpleFunction('form_select', array($this, 'select'), array('needs_context' => true, 'is_safe' => array('html'))),
             new Twig_SimpleFunction('form_choice', array($this, 'choice'), array('needs_context' => true, 'is_safe' => array('html'))),
             new Twig_SimpleFunction('form_options', array($this, 'options')),
+            new Twig_SimpleFunction('form_open', array('Form', 'open'), array('is_safe' => array('html'))),
+            new Twig_SimpleFunction('form_close', array('Form', 'close'), array('is_safe' => array('html'))),
         );
     }
 
@@ -277,7 +279,7 @@ class TwigExtensionForm extends Twig_Extension
             }
 
             return $this->propertyAccesor->getValue($data, $index);
-        } catch (RuntimeException $e) {
+        } catch (InvalidArgumentException $e) {
             return $default;
         }
     }

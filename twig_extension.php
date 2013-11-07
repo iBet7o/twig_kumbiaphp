@@ -24,9 +24,10 @@ class TwigExtension extends Twig_Extension
             new Twig_SimpleFunction('css', array($this, 'css'), array('is_safe' => array('html'))),
             new Twig_SimpleFunction('js', array($this, 'js'), array('is_safe' => array('html'))),
             new Twig_SimpleFunction('asset', array($this, 'asset')),
-            new Twig_SimpleFunction('link', array($this, 'link')),
-            new Twig_SimpleFunction('img', array($this, 'img')),
-            new Twig_SimpleFunction('view_content', array('View', 'content')),
+            new Twig_SimpleFunction('link', array('Html', 'link'), array('is_safe' => array('html'))),
+            new Twig_SimpleFunction('link_action', array('Html', 'linkAction'), array('is_safe' => array('html'))),
+            new Twig_SimpleFunction('img', array('Html', 'img'), array('is_safe' => array('html'))),
+            new Twig_SimpleFunction('view_content', array('View', 'content'), array('is_safe' => array('html'))),
         );
     }
 
@@ -53,6 +54,11 @@ class TwigExtension extends Twig_Extension
     public function link()
     {
         return call_user_func_array(array('Html', 'link'), func_get_args());
+    }
+
+    public function linkAction()
+    {
+        return call_user_func_array(array('Html', 'linkAction'), func_get_args());
     }
 
     public function img()
