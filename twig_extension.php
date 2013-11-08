@@ -23,6 +23,7 @@ class TwigExtension extends Twig_Extension
         return array(
             new Twig_SimpleFunction('css', array($this, 'css'), array('is_safe' => array('html'))),
             new Twig_SimpleFunction('js', array($this, 'js'), array('is_safe' => array('html'))),
+            new Twig_SimpleFunction('url', array($this, 'asset')),
             new Twig_SimpleFunction('asset', array($this, 'asset')),
             new Twig_SimpleFunction('link', array('Html', 'link'), array('is_safe' => array('html'))),
             new Twig_SimpleFunction('link_action', array('Html', 'linkAction'), array('is_safe' => array('html'))),
