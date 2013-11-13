@@ -12,11 +12,35 @@ Luego de haber copiado los archivos ya se puede comenzar a usar el framework con
 
 ### Functiones Generales:
 
-#### css
+#### css(path)
 
-#### js
+Agrega una etiqueta **link** al html incluyendo el css especificado en path, la ruta de dicho path debe ser relativa a la carpeta public/css de la aplicación.
 
-#### url
+Ejemplo:
+
+```html+jinja
+<head>
+    {# no hace falta escribir la extensión del archivo, ya que la función se la coloca automaticamente #}
+    {{ css('style') }}
+    {# GENERA: #}
+    <link href="/proyecto/css/style.css" rel="stylesheet" type="text/css" media="screen" />
+</head>
+``` 
+
+#### js(path)
+
+Agrega una etiqueta **script** al html incluyendo el js especificado en path, la ruta de dicho path debe ser relativa a la carpeta public/javascript de la aplicación.
+
+Ejemplo:
+
+```html+jinja
+{# no hace falta escribir la extensión del archivo, ya que la función se la coloca automaticamente #}
+{{ js('jquery') }}
+{# GENERA: #}
+<script type="text/javascript" src="/proyecto/javascript/jquery.js"></script>
+```
+
+#### url(path = false, action = false, params = array())
 
 #### asset
 
