@@ -1,8 +1,9 @@
 {% extends "@templates/default.twig" %}
+{# extendemos del template default.twig que se encuentra en
+   views/_shared/templates/default.twig #}
 
 {% block content %}
 <div id='logo-kumbia'><img src="{{ asset('img/default/kumbia.png') }}" /></div>
-{{ view_content() }}
 <div id='info'>
     <h1>KumbiaPHP está listo para usarse</h1>
     <p><strong>Bienvenido a KumbiaPHP Framework</strong>. El framework ya está listo para desarrollar aplicaciones web con PHP, rápida y fácilmente

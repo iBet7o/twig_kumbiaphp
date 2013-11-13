@@ -23,12 +23,16 @@ class TwigExtension extends Twig_Extension
         return array(
             new Twig_SimpleFunction('css', array($this, 'css'), array('is_safe' => array('html'))),
             new Twig_SimpleFunction('js', array($this, 'js'), array('is_safe' => array('html'))),
-            new Twig_SimpleFunction('url', array($this, 'asset')),
+            new Twig_SimpleFunction('url', array($this, 'url')),
             new Twig_SimpleFunction('asset', array($this, 'asset')),
             new Twig_SimpleFunction('link', array('Html', 'link'), array('is_safe' => array('html'))),
             new Twig_SimpleFunction('link_action', array('Html', 'linkAction'), array('is_safe' => array('html'))),
             new Twig_SimpleFunction('img', array('Html', 'img'), array('is_safe' => array('html'))),
             new Twig_SimpleFunction('view_content', array('View', 'content'), array('is_safe' => array('html'))),
+            new Twig_SimpleFunction('partial', array('View', '_partial'), array(
+                'is_safe' => array('html'),
+                'needs_context' => true,
+                    )),
         );
     }
 
@@ -65,6 +69,23 @@ class TwigExtension extends Twig_Extension
     public function img()
     {
         return call_user_func_array(array('Html', 'img'), func_get_args());
+    }
+
+    public function url($path = false, $action = false, $params = array())
+    {
+        if (false != $path) {
+            $path = PUBLIC_PATH . trim($path, '/');
+        } elseif (false !== $action) {
+            $path = PUBLIC_PATH . Router::get('controller_path') . '/' . $action;
+        } else {
+            $path = PUBLIC_PATH;
+        }
+
+        if (count($params)) {
+            $path = rtrim($path, '/') . '/' . join('/', $params);
+        }
+
+        return $path;
     }
 
 }

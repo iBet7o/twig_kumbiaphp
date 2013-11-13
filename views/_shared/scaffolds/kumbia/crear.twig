@@ -1,0 +1,26 @@
+{# 
+    Extendemos del template base, puede ser reescrito en el controlador
+    agregando una propiedad al mismo llamada template con el nombre de la
+    plantilla padre a usar.
+ #}
+{% set template = template is defined ? template : 'default' %}
+{% set object = attribute(_context, model) %}{# obtenemos el objeto que se encuentra en el contexto de la vista #}
+{% extends "@templates/#{template}.twig" %}
+
+{% block css %}{# agregamos el css del scaffold por defecto al template #}
+{{ parent() }}
+{{ css('scaffold') }}{# añadimos el css del scaffold #}
+{% endblock %}
+
+{% block content %}
+<div id="scaffold">
+    {{ view_content() }}{# mostramos los mensajes flash #}
+    <h1>{{ model|title }} <span>{{ action_name }}</span></h1>
+    
+    {{ model_form(object) }}{# creamos el formulario a partir del modelo #}
+    
+    <div class="actions">
+        <a href="{{ url(action='') }}">Listado</a>
+    </div>
+</div>
+{% endblock %}

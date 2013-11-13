@@ -4,6 +4,7 @@
   <meta http-equiv='Content-type' content='text/html; charset={{ constant('APP_CHARSET') }}' />
   <title>KumbiaPHP web &amp; App Framework</title>
   {% block css %}
+    {# agregamos algunos css usando la funcion css de la extensión TwigExtension #}
     {{ css('bienvenida') }}
     {{ css('style') }}
   {% endblock css %}
@@ -11,22 +12,15 @@
 <body>
     <div id='content'>
         <div id='head'>
-            <div class='alignright'>
-                <p id='config'>
-                    <span class='app'><?php echo basename(dirname(APP_PATH)) ?></span>
-                    <a title="Ver configuración de la aplicación" href="{{ asset('pages/show/kumbia/status/') }}">Config</a>
-                </p>
-             </div>
-             
             <h1 id='logo'>KumbiaPHP</h1>
             <h2 id='info-app'>web &amp; app Framework versión 1.0</h2>
         </div>
-
         {% block content %}
         {% endblock content %}            
-        {% include '@partials/kumbia/footer.twig' %}
+        {% include '@partials/kumbia/footer.twig' %}{# agregamos una vista parcial partial #}
     </div>
     {% block js %}
+        {# agregamos algunos js usando la funcion js de la extensión TwigExtension #}
         {{ js('jquery/jquery.min') }}
     {% endblock js %}
 </body>

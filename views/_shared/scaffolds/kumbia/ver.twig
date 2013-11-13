@@ -1,0 +1,50 @@
+{# 
+    Extendemos del template base, puede ser reescrito en el controlador
+    agregando una propiedad al mismo llamada template con el nombre de la
+    plantilla padre a usar.
+ #}
+{% set template = template is defined ? template : 'default' %}
+{% set object = attribute(_context, model) %}{# obtenemos el objeto que se encuentra en el contexto de la vista #}
+{% extends "@templates/#{template}.twig" %}
+
+{% block css %}{# agregamos el css del scaffold por defecto al template #}
+{{ parent() }}
+{{ css('scaffold') }}{# añadimos el css del scaffold #}
+{% endblock %}
+
+{% block content %}
+<div id="scaffold">
+    {{ view_content() }}{# mostramos los mensajes flash #}
+    
+    {% if result %}
+        <h1>{{ model|title }} <span>{{ action_name }}</span></h1>
+        
+        <ul>
+            {% for field in model_fields(result) %}
+                {# recorremos los campos del modelo
+                   model_fiels pertenece a la extensión TwigExtensionScaffold
+                #}
+                <li><strong>{{ result.get_alias(field) }} : </strong> {{ attribute(result, field) }}</li>
+            {% endfor %}
+        </ul>
+        
+        <div class="actions">
+            <a href="{{ url(action='') }}">Listado</a>
+            <a href="{{ url(action='crear') }}">Crear registro</a>
+            <a href="{{ url(action='editar', params=[result.id]) }}">Editar</a>
+            <a class="del" title="¿Seguro que quiere borrar?" href="{{ url(action='borrar/'~result.id) }}" 
+               onclick="return confirm('¿Está seguro?');">Borrar</a>
+	</div>
+        
+    {% else %}
+        
+	<h1>No existe</h1>
+	<div class="actions">
+            <a href="{{ url(action='') }}">Listado</a>
+            <a href="{{ url(action='crear') }}">Crear registro</a>
+	</div>
+        
+    {% endif %}
+    
+</div>
+{% endblock %}

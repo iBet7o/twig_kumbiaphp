@@ -1,0 +1,59 @@
+{# 
+    Extendemos del template base, puede ser reescrito en el controlador
+    agregando una propiedad al mismo llamada template con el nombre de la
+    plantilla padre a usar.
+ #}
+{% set template = template is defined ? template : 'default' %}
+{% set object = attribute(_context, model) %}
+{% extends "@templates/#{template}.twig" %}
+
+{% block css %}
+{{ parent() }}
+{{ css('scaffold') }}{# añadimos el css del scaffold #}
+{% endblock %}
+
+{% block content %}
+<div id="scaffold">
+    {{ view_content() }}{# mostramos los mensajes flash #}
+    <h1>{{ model|title }} <span>{{ action_name }}</span></h1>
+    
+    {% if results.items|length %}
+        {% set firstModel = results.items|first %}{# recuperamos el primer objeto con el fin de obtener los campos del mismo #}
+        <table>
+            <thead>
+                <tr>
+                    {% for field in model_fields(firstModel) %}
+                        {# recorremos los campos del modelo
+                           model_fiels pertenece a la extensión TwigExtensionScaffold
+                        #}
+                        <th>{{ firstModel.get_alias(field)|title }}</th>
+                    {% endfor %}
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in results.items %}
+                    <tr>
+                        {% for field in model_fields(item) %}
+                            <td>{{ attribute(item, field) }}</td>
+                        {% endfor %}
+                        <td>
+                            {{ link_action("ver/#{item.id}/", "Ver") }}
+                            {#{ link_action("editar/#{item.id}/", "Editar") Esta es una forma }#}
+                            <a href="{{ url(action="editar/#{item.id}/") }}">Editar</a>{# esta es otra y es la recomendada #}
+                            <a href="{{ url(action="borrar", params=[item.id]) }}" {# tambien se puede pasar un arreglo de parametros #}
+                               onclick="return confirm('¿Está seguro?')">Borrar</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <h2>No hay ningún registro</h2>
+    {% endif %}
+        
+    <div class="actions">
+        {{ link_action('crear/', 'Crear Registro') }}
+    </div>
+</div>
+{% endblock %}
