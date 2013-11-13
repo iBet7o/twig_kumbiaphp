@@ -42,15 +42,75 @@ Ejemplo:
 
 #### url(path = false, action = false, params = array())
 
+Devuelve una url que apunta a la ruta especificada, se puede usar de varias maneras:
+
+```html+jinja
+{# el uso básico es el siguiente: #}
+<a href="{{ url('usuarios') }}">Usuarios</a> {# --> #} <a href="/proyecto/usuarios">Usuarios</a>
+<a href="{{ url('admin/estados') }}">Estados</a> {# --> #} <a href="/proyecto/admin/estados">Estados</a>
+<a href="{{ url("categorias/editar/#{id}") }}">Cat</a> {# --> #} <a href="/proyecto/categorias/editar/2">Cat</a>
+<a href="{{ url(path="user", params=[2]) }}">Show</a> {# --> #} <a href="/proyecto/user/2">Show</a>
+<a href="{{ url(params=[2], path="user") }}">Show</a> {# --> #} <a href="/proyecto/user/2">Show</a>
+
+{# Tambien se puede usar solo para cambiar de acción: #}
+<a href="{{ url(action="edit", params=[2]) }}">Edit</a> {# --> #} <a href="/proyecto/user/edit/2">Edit</a>
+<a href="{{ url(params=[2], action="edit") }}">Edit</a> {# --> #} <a href="/proyecto/user/edit/2">Edit</a>
+<a href="{{ url(action="create") }}">Create</a> {# --> #} <a href="/proyecto/admin/estados/create">Create</a>
+
+{# esto gracias a que twig permite llamar a los parametros por nombre #}
+```
+
 #### asset
 
-#### img
+Devuelve una url que apunta un archivo cualquiera en **proyecto/public**
 
-#### link
+Ejemplo:
+
+```html+jinja
+<img src="{{ asset('img/fondo.png') }}" /> {# --> #} <img src="/proyecto/img/fondo.png" />
+<a href="{{ asset('img/fondo.png') }}">Download</a> {# --> #} <a href="/proyecto/img/fondo.png">Download</a>
+<script type="text/javascript" src="{{ asset('javascript/jquery.js' }}"></script>
+```
+
+#### img(src, alt=NULL, attrs = NULL)
+
+Crea una etiqueta img dentro de la aplicación, funciona igual que Html::img($src, $alt=NULL, $attrs = NULL).
+
+Ejemplo:
+
+```html+jinja
+{{ img('img/fondo.png') }} {# --> #} <img src="/proyecto/img/fondo.png" />
+```
+
+#### link(action, text, attrs = NULL)
+
+Crea una etiqueta **a** dentro de la aplicación, funciona igual que Html::link($action, $text, $attrs = NULL).
+
+Ejemplo:
+
+```html+jinja
+{{ link('user/create', 'Create User') }} {# --> #} <a href="/proyecto/user/create">Create User</a>
+```
 
 #### link_action
 
+Crea una etiqueta **a** que apunto a una acción del controlador actual dentro de la aplicación, funciona igual que Html::linkAction($action, $text, $attrs = NULL).
+
+Ejemplo:
+
+```html+jinja
+{{ link_action('create', 'Create User') }} {# --> #} <a href="/proyecto/user/create">Create User</a>
+```
+
 #### view_content
+
+Llama a View::content() he incluye los mensajes flash y otras cosas impresas en controladores y librerias.
+
+Uso:
+
+```html+jinja
+{{ view_content() }}
+```
 
 ### Functiones de Formularios:
 
