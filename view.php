@@ -1,6 +1,6 @@
 <?php
 
-/**
+/** 
  * @see KumbiaView
  */
 require_once CORE_PATH . 'kumbia/kumbia_view.php';
