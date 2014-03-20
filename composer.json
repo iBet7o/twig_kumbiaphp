@@ -1,0 +1,11 @@
+{
+    "name": "manuelj555/twig_kumbiaphp",
+    "description": "Lib para añadir twig a KumbiaPHP",
+    "require": {
+        "php": ">=5.2.4",
+        "twig/twig": "dev-master"
+    },
+    "autoload":{
+        "psr-0": { "KuTwig_" : "lib/" }
+    }
+}
