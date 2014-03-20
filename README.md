@@ -24,7 +24,9 @@ Con el siguiente código:
 
 ```
 
-Luego de eso debemos hacer que nuestra clase **app/View** extienda de **KuTwig_View**:
+Luego de eso ejecutamos el comando **composer install**.
+
+Ahora debemos hacer que nuestra clase **app/View** extienda de **KuTwig_View**:
 
 ```php
 <?php
