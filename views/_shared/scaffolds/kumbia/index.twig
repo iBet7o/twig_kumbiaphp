@@ -4,7 +4,6 @@
     plantilla padre a usar.
  #}
 {% set template = template is defined ? template : 'default' %}
-{% set object = attribute(_context, model) %}
 {% extends "@templates/#{template}.twig" %}
 
 {% block css %}

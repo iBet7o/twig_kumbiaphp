@@ -4,7 +4,6 @@
     plantilla padre a usar.
  #}
 {% set template = template is defined ? template : 'default' %}
-{% set object = attribute(_context, model) %}{# obtenemos el objeto que se encuentra en el contexto de la vista #}
 {% extends "@templates/#{template}.twig" %}
 
 {% block css %}{# agregamos el css del scaffold por defecto al template #}
