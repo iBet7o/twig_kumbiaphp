@@ -272,7 +272,8 @@ class KuTwig_Extension_Form extends Twig_Extension
         if (is_array($data) || $data instanceof ArrayAccess) { // array
             $arrayItem = is_bool($index) || is_float($index) ? (int) $index : $index;
 
-            if (array_key_exists($arrayItem, $data)) {
+            if ((is_array($data) && array_key_exists($arrayItem, $data)) ||
+                    ($data instanceof ArrayAccess && isset($data[$arrayItem]))) {
                 return $data[$arrayItem];
             }
         }
