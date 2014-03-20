@@ -3,7 +3,7 @@
     "description": "Lib para añadir twig a KumbiaPHP",
     "require": {
         "php": ">=5.2.4",
-        "twig/twig": "dev-master"
+        "twig/twig": "*"
     },
     "autoload":{
         "psr-0": { "KuTwig_" : "lib/" }
