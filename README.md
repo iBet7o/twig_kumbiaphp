@@ -4,9 +4,59 @@ Este repositorio contiene una serie de clases que permiten la integración del s
 
 ## Instalación
 
-Para instalar la libreria es necesario descargar este repositorio y colocar su contenido directamente en la carpeta **proyecto/app/libs** de la aplicación, se debe tener cuidado ya que el repositorio contiene un archivo view.php y este va a reemplazar al que viene por defecto con el framework, si usted tiene algún código agregado a dicho archivo, debe realizar una integración manual entre el view.php de su proyecto y el view.php de este repositorio.
+La instalación se realiza mediante composer, se debe crear o añadir a un archivo composer.json en la raiz del proyecto:
 
-Luego de haber copiado los archivos ya se puede comenzar a usar el framework con las vistas en twig, para ello mueva la carpeta views de este repo a la altura de **app**, con el fin de hacer una mezcla entre la carpeta views del framework y la que se va a mover (en la carpeta view proporcionada con el repo, se encuentran algunas vistas twig de ejemplo para comenzar a trabajar con twig).
+    proyecto
+        |
+        |--vendor
+        |--default
+        |--core
+        |--composer.json        Acá va nuestro archivo
+
+Con el siguiente código:
+
+```json
+{
+    "require": {
+        "manuelj555/twig-kumbiaphp": "dev-master"
+    }
+}
+
+```
+
+Luego de eso debemos hacer que nuestra clase **app/View** extienda de **KuTwig_View**:
+
+```php
+<?php
+/**
+ * @see KumbiaView
+ */
+require_once CORE_PATH . 'kumbia/kumbia_view.php';
+
+/**
+ * Esta clase permite extender o modificar la clase ViewBase de Kumbiaphp.
+ *
+ * @category KumbiaPHP
+ * @package View
+ */
+class View extends KuTwig_View
+{
+
+}
+```
+Por ultimo debemos cargar el autoload de composer, yo lo hago agregando esta linea en el **public/index.php** antes de cargar el **bootstrap.php**
+
+```php
+...
+//require APP_PATH . 'libs/bootstrap.php'; //bootstrap de app
+
+require dirname(CORE_PATH) . '/vendor/autoload.php';  //acá cargo el autoload de composer :-)
+
+require CORE_PATH . 'kumbia/bootstrap.php'; //bootstrap del core 
+```
+
+Y con esto ya tenemos twig funcionando en nuestras vistas :-)
+
 
 ## Funciones Twig Disponibles
 
