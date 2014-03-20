@@ -303,7 +303,7 @@ class KuTwig_Extension_Form extends Twig_Extension
             }
 
             if (isset($method)) {
-                return call_user_func_array(array($data, $method));
+                return call_user_func(array($data, $method));
             }
         }
 
