@@ -16,6 +16,9 @@
  */
 class KuTwig_View extends KumbiaView
 {
+    private static $twig;
+
+    private static $loader;
 
     /**
      * Devuelve un singleton de Twig
@@ -24,39 +27,33 @@ class KuTwig_View extends KumbiaView
      */
     public static function getTwig()
     {
-        static $twig = null;
+        if (! self::$twig instanceof Twig_Environment) {
+            self::$twig = new Twig_Environment(self::getTwigLoader(), static::getConfig());
 
-        if (!$twig) {
-
-            $twig = new Twig_Environment(self::getTwigLoader(), static::getConfig());
-
-            static::prepareTwig($twig);
+            static::prepareTwig(self::$twig);
         }
 
-        return $twig;
+        return self::$twig;
     }
 
     public static function getTwigLoader()
     {
-        static $loader = null;
+        if (! self::$loader instanceof Twig_Loader_Filesystem) {
+            self::$loader = new Twig_Loader_Filesystem();
 
-        if (!$loader) {
-
-            $loader = new Twig_Loader_Filesystem();
-
-            self::prepareLoader($loader);
+            self::prepareLoader(self::$loader);
         }
 
-        return $loader;
+        return self::$loader;
     }
 
-    public static function render($controller)
+    public static function render(Controller $controller)
     {
         // Guarda el controlador actual
         self::$_controller = $controller;
         self::$_content = ob_get_clean();
 
-        if (!self::$_view) {
+        if (! self::$_view) {
             return ob_end_flush();
         }
 
@@ -66,7 +63,7 @@ class KuTwig_View extends KumbiaView
         $view = self::$_path . self::$_view . '.twig';
 
         // si se usa el scaffold verificamos la vista a usar.
-        if (isset($scaffold) and !self::getTwigLoader()->exists($view)) {
+        if (isset($scaffold) and ! self::getTwigLoader()->exists($view)) {
             $view = "@scaffolds/$scaffold/" . self::$_view . '.twig';
         }
 
@@ -80,14 +77,14 @@ class KuTwig_View extends KumbiaView
         extract($context, EXTR_OVERWRITE);
         extract($params, EXTR_OVERWRITE);
 
-        if (!include $__file) {
+        if (! include $__file) {
             throw new KumbiaException("No existe el partial $__file");
         }
     }
 
     protected static function prepareTwig(Twig_Environment $twig)
     {
-        if (!PRODUCTION) {
+        if (! PRODUCTION) {
             $twig->addExtension(new Twig_Extension_Debug());
         }
 
@@ -112,5 +109,4 @@ class KuTwig_View extends KumbiaView
             'strict_variables' => !PRODUCTION,
         );
     }
-
 }
